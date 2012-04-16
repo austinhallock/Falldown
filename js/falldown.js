@@ -33,6 +33,7 @@ Clay.ready(function(){
 		font_color: "rgba( 255, 255, 255, 0.5 )",
 		font_stroke: "rgba( 0, 0, 0, 0.5 )",
 		font_stroke_width: "3",
+		background_color: "rgb( 255, 255, 255 )", // Canvas bg color
 		dt: 0 // for logging frame rate
 	}
 	//show splash message
@@ -113,7 +114,8 @@ Clay.ready(function(){
 			fd.ball.color_string = "rgb(" + fd.ball.color.red + "," + ( 255 - fd.ball.color.green ) + "," + ( 255 - fd.ball.color.blue ) + ")";
 
 			// Change the canvas background color to be the opposite
-			$("#canvas").css( 'background', "rgb(" + ( fd.ball.color.red ) + "," + ( fd.ball.color.green ) + "," + ( fd.ball.color.blue ) + ")" )
+			//$("#canvas").css( 'background', "rgb(" + ( fd.ball.color.red ) + "," + ( fd.ball.color.green ) + "," + ( fd.ball.color.blue ) + ")" )
+			fd.background.background_color = "rgb(" + ( fd.ball.color.red ) + "," + ( fd.ball.color.green ) + "," + ( fd.ball.color.blue ) + ")" 
 
 			//update score
 			fd.score += dt;
@@ -207,6 +209,7 @@ Clay.ready(function(){
 		canvas.clearCanvas();
 		fd.ball.x_pos = 100;
 		fd.ball.y_pos = 100;
+		de.queue.push(fd.background);
 		de.queue.push(fd.ball);
 		
 		generateRow(); // called over and over via timeout
@@ -594,6 +597,22 @@ Clay.ready(function(){
 
 		fd.ball.y_pos += dy;
 	}
+	
+	// Background color of canvas
+	fd.background = {
+		background_color: fd.background_color,
+		draw: function(canvas) {
+			if( !de.mobile )
+				canvas.drawRect({
+					x: 0 ,
+					y: 0 ,
+					width: de.width ,
+					height: de.height ,
+					fromCenter: false ,
+					fillStyle: this.background_color
+				});
+		}
+	};
 
 	//add a ball
 	fd.ball = {

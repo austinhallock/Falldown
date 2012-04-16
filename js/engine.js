@@ -20,7 +20,8 @@ de = {
 		left: false ,
 		right: false ,
 		space: false
-	}
+	} ,
+	mobile: navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
 };
 
 // shim layer with setTimeout fallback
